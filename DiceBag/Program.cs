@@ -3,8 +3,16 @@ using System.Diagnostics;
 
 namespace DiceBag;
 class Program {
+    private Random _dice = new Random();
+
     static void Main(string[] args) {
-        Random dice = new Random();
+        var program = new Program();
+        program.CreateScores();
+        program.DiceRoll(20);
+        program.Roll(3);
+    }
+
+    void CreateScores() {
         var scores = new List<int>();
 
         for (var i = 0; i < 6; i++) {
@@ -12,7 +20,7 @@ class Program {
             
             // roll 4d6
             for (int j = 0; j < 4; j++) {
-                rolls.Add(dice.Next(1, 7));
+                rolls.Add(DiceRoll(6));
             }
 
             // remove minimum
@@ -26,6 +34,24 @@ class Program {
             Console.WriteLine($"Your score is {score}");
         }
     }
-    
+
+    int DiceRoll(int sides) {
+        // Create a die of variable size
+        return _dice.Next(1, sides);
+    }
+
+    void Roll(int numberOfDice) {
+
+        // Create list
+        var roll = new List<int>();
+        
+        for (int k = 0; k < numberOfDice; k++) {
+            // Roll custom die
+            roll.Add(DiceRoll(20));
+        }
+
+        // Print sum of dice
+        Console.WriteLine($"You rolled a {roll.Sum()}");
+    }
     
 }
